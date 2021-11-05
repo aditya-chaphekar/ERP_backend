@@ -1,4 +1,4 @@
-export const HttpConstants = {
+export const HttpConstants = Object.freeze({
     CONTINUE: {
         code: 100,
         message: 'Continue Processing'
@@ -82,5 +82,9 @@ export const HttpConstants = {
     ILLEGAL: {
         code: 451,
         message: 'The user agent requested a resource that cannot legally be provided'
+    },
+    INTERNAL: {
+        code: 500,
+        message: 'Internal Server Error'
     }
-}
+});
