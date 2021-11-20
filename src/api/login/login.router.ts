@@ -17,7 +17,7 @@ loginRouter.post('/student', async (req: Request, res: Response) => {
             email,
             password,
         });
-        res.status(HttpConstants.SUCCESS.code).json({code, message, data});
+        res.status(code).json({code, message, data});
     } catch (e) {
         res.status(HttpConstants.BAD_REQUEST.code).json(HttpConstants.BAD_REQUEST);
     }
@@ -40,7 +40,7 @@ loginRouter.put('/student', async (req: Request, res: Response) => {
             name,
             class: studentClass,
         });
-        res.status(HttpConstants.SUCCESS.code).json({code, message, data});
+        res.status(code).json({code, message, data});
     } catch (e) {
         res.status(HttpConstants.BAD_REQUEST.code).json(HttpConstants.BAD_REQUEST);
     }
