@@ -1,7 +1,8 @@
 import express, {Request, Response} from "express";
 import {studentLogin, studentRegister} from "./login.service";
-import {HttpConstants} from "../../constants/http-constants";
+import {GeneralConstants} from "../../constants/general";
 import {checkBlank} from "../../common/validation";
+import {failedResponse, successResponse} from "../../common/responses";
 
 export const loginRouter = express.Router();
 
@@ -10,16 +11,16 @@ loginRouter.post('/student', async (req: Request, res: Response) => {
     const password= req.body.password;
 
     if (checkBlank([email, password]))
-        return res.status(HttpConstants.BAD_REQUEST.code).json(HttpConstants.BAD_REQUEST)
+        return failedResponse(res, GeneralConstants.MISSING_PARAMS)
 
     try {
         const {code, message, data} = await studentLogin({
             email,
             password,
         });
-        res.status(code).json({code, message, data});
+        successResponse(res,{code, message, data});
     } catch (e) {
-        res.status(HttpConstants.BAD_REQUEST.code).json(HttpConstants.BAD_REQUEST);
+        failedResponse(res, e)
     }
 });
 
@@ -31,7 +32,7 @@ loginRouter.put('/student', async (req: Request, res: Response) => {
     const studentClass = req.body.class;
 
     if (checkBlank([email, password, name, studentClass]))
-        return res.status(HttpConstants.BAD_REQUEST.code).json(HttpConstants.BAD_REQUEST)
+        return failedResponse(res, GeneralConstants.MISSING_PARAMS)
 
     try {
         const {code, message, data} = await studentRegister({
@@ -40,9 +41,8 @@ loginRouter.put('/student', async (req: Request, res: Response) => {
             name,
             class: studentClass,
         });
-        res.status(code).json({code, message, data});
+        successResponse(res,{code, message, data});
     } catch (e) {
-        res.status(HttpConstants.BAD_REQUEST.code).json(HttpConstants.BAD_REQUEST);
+        failedResponse(res, e)
     }
-
 });
