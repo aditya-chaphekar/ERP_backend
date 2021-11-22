@@ -1,9 +1,9 @@
 import express, {Request, Response} from "express";
 import {studentLogin, studentRegister} from "./login.service";
-import {GeneralConstants} from "../../constants/general";
 import {checkBlank} from "../../common/validation";
 import {failedResponse, successResponse} from "../../common/responses";
 import {HttpConstants} from "../../constants/http-constants";
+import {ErrorConstants} from "../../constants/error-constants";
 
 export const loginRouter = express.Router();
 
@@ -12,7 +12,7 @@ loginRouter.post('/student', async (req: Request, res: Response) => {
     const password= req.body.password;
 
     if (checkBlank([email, password]))
-        return successResponse(res, {...HttpConstants.BAD_REQUEST, message: GeneralConstants.MISSING_PARAMS})
+        return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.MISSING_PARAM })
 
     try {
         const {code, message, data} = await studentLogin({
@@ -33,7 +33,7 @@ loginRouter.put('/student', async (req: Request, res: Response) => {
     const studentClass = req.body.class;
 
     if (checkBlank([email, password, name, studentClass]))
-        return successResponse(res, {...HttpConstants.BAD_REQUEST, message: GeneralConstants.MISSING_PARAMS})
+        return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.MISSING_PARAM })
 
     try {
         const {code, message, data} = await studentRegister({
