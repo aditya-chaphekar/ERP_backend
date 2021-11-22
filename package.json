@@ -34,5 +34,5 @@
       "dev": "ts-node-dev --respawn --pretty --transpile-only src/index.ts",
       "start": "ts-node src/index.ts",
       "test": "echo \"Error: no test specified\" && exit 1"
-   },
+   }
 }
