@@ -1,6 +1,6 @@
 import express, {Request, Response} from "express";
 import {studentLogin, studentRegister} from "./login.service";
-import {checkBlank} from "../../common/validation";
+import {checkBlank, validateEmail} from "../../common/validation";
 import {failedResponse, successResponse} from "../../common/responses";
 import {HttpConstants} from "../../constants/http-constants";
 import {ErrorConstants} from "../../constants/error-constants";
@@ -11,8 +11,11 @@ loginRouter.post('/student', async (req: Request, res: Response) => {
     const email = req.body.email;
     const password= req.body.password;
 
-    if (checkBlank([email, password]))
+    if (checkBlank([email, password])) 
         return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.MISSING_PARAM })
+    
+    if(!validateEmail(email))
+        return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.INVALID_EMAIL })
 
     try {
         const {code, message, data} = await studentLogin({
@@ -30,11 +33,13 @@ loginRouter.put('/student', async (req: Request, res: Response) => {
     const email= req.body.email;
     const password= req.body.password;
     const name= req.body.name;
-    const studentClass = req.body.class;
+    const studentClass = req.body.class || '';
 
-    if (checkBlank([email, password, name, studentClass]))
+    if (checkBlank([email, password, name]))
         return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.MISSING_PARAM })
-
+    
+    if(!validateEmail(email))
+        return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.INVALID_EMAIL })
     try {
         const {code, message, data} = await studentRegister({
             email,
