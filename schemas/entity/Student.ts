@@ -9,7 +9,7 @@ export class Student {
     name: string | null;
 
     @Column('varchar', {name: 'class', nullable: true})
-    class: string | null;
+    classVar: string | null;
 
     @Column('varchar', {name: 'password', nullable: false})
     password: string ;
@@ -17,6 +17,6 @@ export class Student {
     @Column('varchar', {name: 'email', nullable: false})
     email: string ;
 
-    @Column('datetime', {name: 'created_at', nullable: true})
-    createdAt: Date | null;
+    @Column('datetime', {name: 'created_at', nullable: false, default: () => 'CURRENT_TIMESTAMP'})
+    createdAt: Date;
 }

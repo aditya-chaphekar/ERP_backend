@@ -11,9 +11,9 @@ loginRouter.post('/student', async (req: Request, res: Response) => {
     const email = req.body.email;
     const password= req.body.password;
 
-    if (checkBlank([email, password])) 
+    if (checkBlank([email, password]))
         return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.MISSING_PARAM })
-    
+
     if(!validateEmail(email))
         return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.INVALID_EMAIL })
 
@@ -37,7 +37,7 @@ loginRouter.put('/student', async (req: Request, res: Response) => {
 
     if (checkBlank([email, password, name]))
         return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.MISSING_PARAM })
-    
+
     if(!validateEmail(email))
         return successResponse(res, {...HttpConstants.BAD_REQUEST, ...ErrorConstants.INVALID_EMAIL })
     try {

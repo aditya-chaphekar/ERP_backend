@@ -54,7 +54,7 @@ export const studentRegister = async (credentials: RegisterInterface) => {
                 email: credentials.email,
                 password: credentials.password,
                 name: credentials.name,
-                class: credentials.class,
+                classVar: credentials.class,
                 createdAt: new Date(),
             })
             return {
